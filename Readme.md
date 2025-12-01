@@ -1,88 +1,44 @@
-# Documentation des Données - Projet Chatbot Formation
+# RAG Chatbot with LangChain & GPT
 
-Ce document a pour objectif d'expliquer la structure des données disponibles dans le dossier `content/`, afin d'aider l'équipe LLM (notamment Mohammed) à exploiter les exports pour la vectorisation et le RAG sans avoir à revoir l'intégralité du pipeline de préparation.
+An intelligent chatbot leveraging Retrieval-Augmented Generation (RAG) using LangChain framework and OpenAI's GPT models.
 
----
+## 🛠️ Technologies
 
-## 📁 Structure du dossier `content/`
+- **LLM Framework**: LangChain
+- **Language Model**: OpenAI GPT-3.5/GPT-4
+- **Language**: Python 3.x
+- **Vector Store**: FAISS / ChromaDB
+- **Embeddings**: OpenAI Embeddings
 
+## 📋 Features
+
+- Retrieval-Augmented Generation (RAG) architecture
+- Context-aware responses using document retrieval
+- Integration with OpenAI API
+- Conversational memory management
+
+## 🚀 Installation
 ```bash
-content/
-├── json/                      # Formations au format JSON structuré (1 fichier par formation)
-│   └── formations/
-│       └── Formation_<titre>.json
-├── csv/                       # Export CSV équivalent des JSON
-│   └── formations/
-│       └── Formation_<titre>.csv
-├── chunks/                    # Textes découpés pour la vectorisation (1 fichier JSON par formation)
-├── vectorized/                # Données vectorisées (FAISS/ChromaDB)
-│   ├── chroma/                # Base ChromaDB contenant les embeddings et metadata
-│   └── vector_data/          # Export brut des vecteurs (format JSON ou pickle)
-└── README.md                  # Catalogue des formations généré automatiquement
+# Clone the repository
+git clone https://github.com/MohdSarar/ChatBot-gpt---Langchain.git
+cd ChatBot-gpt---Langchain
+
+# Install dependencies
+pip install langchain openai faiss-cpu python-dotenv
+
+# Set up environment variables
+echo "OPENAI_API_KEY=your_api_key_here" > .env
 ```
 
----
+## ⚙️ Configuration
 
-## 📘 Description des dossiers & fichiers
+Create a `.env` file with your OpenAI API key:
 
-### `json/formations/`
-- Contient les fiches formations avec tous les champs utiles au LLM :
-  - `titre`, `objectifs`, `prérequis`, `public`, `programme`
-  - `niveau`, `durée`, `modalité`, `lieu`, `tarif`
-  - `resume_html` : HTML complet de la page formation (utile pour le RAG ou résumé automatique)
+OPENAI_API_KEY=sk-your-api-key-here 
 
-### `csv/formations/`
-- Même contenu que les fichiers JSON, dans un format tabulaire.
-- Utilisable pour des analyses ou une conversion rapide.
+## 🏗️ Architecture
+User Query → Embedding → Vector Search → Context Retrieval → LLM → Response
 
-### `chunks/`
-- Contient le texte des formations découpé en "chunks" (morceaux de texte) pour faciliter la vectorisation.
-- Chaque fichier correspond à une formation.
-- Format : liste de dictionnaires avec au minimum :
-  - `chunk_id`, `content`, `source`, `titre`
+## 👤 Author
 
-### `vectorized/`
-- Ce répertoire contient les données prêtes à l'emploi pour une utilisation dans un système RAG.
-
-#### `vectorized/chroma/`
-- Structure interne gérée automatiquement par ChromaDB (persist directory)
-- Inclut les vecteurs, les métadonnées et les documents originaux
-- Peut être directement utilisé pour interroger une base Chroma avec un Retriever.
-
-#### `vectorized/vector_data/`
-- Format plus brut : JSON ou Pickle contenant :
-  - les embeddings vectoriels
-  - les textes associés
-  - les métadonnées utiles pour filtrer/ranker
-- Utile pour entraîner, tester ou migrer vers d'autres bases (FAISS, Pinecone, etc.)
-
----
-
-## 🧠 Conseils pour Mohammed (LLM / RAG)
-
-- Utiliser les chunks JSON pour construire une base Chroma ou FAISS si besoin.
-- Les métadonnées (titre, source, etc.) sont conservées pour le filtrage.
-- Le champ `resume_html` peut être utilisé pour générer un résumé contextuel.
-- `vectorized/chroma` peut être utilisé directement avec LangChain / LlamaIndex.
-- Si besoin de réentraînement, `chunks/` + modèle d’embedding suffisent.
-
----
-
-## 🛠️ Outils compatibles
-
-- LangChain (Chroma, FAISS, retrievers)
-- LlamaIndex (Document loaders, vector store readers)
-- Hugging Face Transformers (embeddings, RAG)
-- FastAPI pour servir les réponses vectorielles
-
----
-
-## ✅ Données prêtes pour exploitation
-
-Aucune étape de nettoyage, découpage ou enrichissement supplémentaire n’est requise. Toutes les données sont prêtes pour l’intégration dans une architecture RAG.
-
-👉 Il suffit de charger les chunks ou la base Chroma pour démarrer le développement LLM.
-
-## Commandes
-
-Lancer le serveur => ./start_api.sh
+**Mohammed ABUSARAR** - [GitHub](https://github.com/MohdSarar)
