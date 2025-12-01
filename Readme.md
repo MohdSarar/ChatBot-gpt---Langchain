@@ -39,6 +39,9 @@ OPENAI_API_KEY=sk-your-api-key-here
 ## 🏗️ Architecture
 User Query → Embedding → Vector Search → Context Retrieval → LLM → Response
 
+![Description](chatbot langchain.png)
+![Description](ChatBot-gpt---Langchain flow.png)
+
 ## 👤 Author
 
 **Mohammed ABUSARAR** - [GitHub](https://github.com/MohdSarar)
